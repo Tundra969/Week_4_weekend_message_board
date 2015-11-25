@@ -26,7 +26,7 @@ app.get('/data', function(req,res){
 
         // After all data is returned, close connection and return results
         query.on('end', function () {
-            //client.end()
+            client.end();
             return res.json(results);
         });
 
@@ -35,6 +35,11 @@ app.get('/data', function(req,res){
             console.log(err);
         }
     });
+});
+
+app.get("/*", function(req,res){
+    var file = req.params[0] || "/views/index.html";
+    res.sendFile(path.join(__dirname, "./public", file));
 });
 
 // Add a new message
@@ -57,23 +62,10 @@ app.post('/data', function(req,res){
                 }
                 res.send(true);
             });
-
+    console.log(newMessage);
     });
 
 });
-
-
-app.get("/*", function(req,res){
-    var file = req.params[0] || "/views/index.html";
-    res.sendFile(path.join(__dirname, "./public", file));
-});
-
-app.set("port", process.env.PORT || 5000);
-
-app.listen(app.get("port"), function(){
-    console.log("Listening on port: ", app.get("port"));
-});
-
 
 app.delete('/data', function(req,res){
     console.log(req.body.id);
@@ -92,4 +84,10 @@ app.delete('/data', function(req,res){
                 res.send(true);
             });
     });
+});
+
+app.set("port", process.env.PORT || 5000);
+
+app.listen(app.get("port"), function(){
+    console.log("Listening on port: ", app.get("port"));
 });

@@ -24,6 +24,7 @@ function addMessage(data){
         values[field.name] = field.value;
     });
 
+    console.log(values);
     $.ajax({
         type: "POST",
         url: "/data",
@@ -51,7 +52,7 @@ function deleteMessage(){
 
 function updateDOM(data){
     $("#messages").empty();
-
+    console.log(data);
     for(var i = 0; i < data.length; i++){
         var el = "<div class='well col-md-4'>" +
             "<p>" + data[i].name + "</p>" +
